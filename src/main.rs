@@ -208,7 +208,7 @@ impl CodecCore {
         Some(n - 1)
     }
 
-    // --- УПАКОВКА (СЖАТИЕ) ---
+    // --- PACKING (COMPRESSION) ---
 
     fn apply_delta(chunk: &[u8]) -> Vec<u8> {
         let mut out = Vec::with_capacity(chunk.len());
@@ -418,13 +418,13 @@ impl CodecCore {
         }
 
         let elapsed = start_time.elapsed();
-        println!("Упаковка завершена.");
-        println!("  Оригинал: {} байт", total_read);
-        println!("  Время:    {:.3}с", elapsed.as_secs_f64());
+        println!("Compression complete.");
+        println!("  Original: {} bytes", total_read);
+        println!("  Time:     {:.3}s", elapsed.as_secs_f64());
         Ok(())
     }
 
-    // --- РАСПАКОВКА (ДЕКОМПРЕССИЯ) ---
+    // --- UNPACKING (DECOMPRESSION) ---
 
     fn decompress_path0(&self, reader: &mut BitReader) -> Vec<u8> {
         let mut out = Vec::new();
@@ -567,9 +567,9 @@ impl CodecCore {
             
             let calculated_checksum = adler32(&decompressed_chunk);
             if calculated_checksum != stored_checksum {
-                println!("\n! [КРИТИЧЕСКАЯ ОШИБКА] Блок данных поврежден! Сработала система защиты целостности.");
-                println!("! Ожидаемый хэш: {}, Полученный хэш: {}", stored_checksum, calculated_checksum);
-                println!("! Возможно, введен неправильный пароль или файл был физически поврежден.");
+                println!("\n! [CRITICAL ERROR] Data block corrupted! Integrity protection triggered.");
+                println!("! Expected hash: {}, Calculated hash: {}", stored_checksum, calculated_checksum);
+                println!("! The password may be incorrect, or the file is physically damaged.");
             }
             
             output_file.write_all(&decompressed_chunk)?;
@@ -577,9 +577,9 @@ impl CodecCore {
         }
 
         let elapsed = start_time.elapsed();
-        println!("Распаковка завершена.");
-        println!("  Восстановлено: {} байт", total_written);
-        println!("  Время:         {:.3}с", elapsed.as_secs_f64());
+        println!("Decompression complete.");
+        println!("  Restored: {} bytes", total_written);
+        println!("  Time:     {:.3}s", elapsed.as_secs_f64());
         Ok(())
     }
 }
@@ -590,9 +590,9 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 4 {
         println!("Obscura Stealth Codec - Lossless Cryptographic Container");
-        println!("Использование:");
-        println!("  {} compress <вход> <выход> [пароль]", args[0]);
-        println!("  {} decompress <вход> <выход> [пароль]", args[0]);
+        println!("Usage:");
+        println!("  {} compress <input> <output> [password]", args[0]);
+        println!("  {} decompress <input> <output> [password]", args[0]);
         return;
     }
 
@@ -607,19 +607,19 @@ fn main() {
         ktime = fractal_mirror_hash(password);
     } else {
         if mode == "compress" {
-            println!("\n[ОШИБКА] Безопасность превыше всего: пароль не указан!");
+            println!("\n[ERROR] Security first: no password provided!");
             
             use std::time::{SystemTime, UNIX_EPOCH};
             let random_val = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos() as u64;
             let mut auto_pass = format!("{:X}", random_val.wrapping_mul(GOLDEN_RATIO_MAGIC));
             auto_pass.truncate(12);
             
-            println!("Алгоритм Obscura запрещает шифровать данные без защиты паролем.");
-            println!("> Сгенерирован надежный пароль: {}", auto_pass);
+            println!("Obscura Codec refuses to encode data without password protection.");
+            println!("> Generated strong password: {}", auto_pass);
             println!("  {} compress {} {} {}\n", args[0], input_file, output_file, auto_pass);
             return;
         } else {
-            println!("\n[ОШИБКА] Отказано в доступе! Укажите пароль.");
+            println!("\n[ERROR] Access Denied! Provide a password.");
             return;
         }
     }
@@ -628,19 +628,19 @@ fn main() {
 
     match mode.as_str() {
         "compress" => {
-            println!("Упаковка файла: {}", input_file);
+            println!("Compressing file: {}", input_file);
             if let Err(e) = codec.compress_file(input_file, output_file) {
-                eprintln!("Ошибка сжатия: {}", e);
+                eprintln!("Compression error: {}", e);
             }
         }
         "decompress" => {
-            println!("Распаковка файла: {}", input_file);
+            println!("Decompressing file: {}", input_file);
             if let Err(e) = codec.decompress_file(input_file, output_file) {
-                eprintln!("Ошибка декомпрессии: {}", e);
+                eprintln!("Decompression error: {}", e);
             }
         }
         _ => {
-            eprintln!("Неизвестный режим.");
+            eprintln!("Unknown mode.");
         }
     }
 }
