@@ -4,10 +4,10 @@ use std::io::{self, Read, Write};
 use std::time::Instant;
 use std::collections::HashMap;
 
-const CHUNK_SIZE: usize = 1024 * 1024; // 1 МБ
+const CHUNK_SIZE: usize = 1024 * 1024; // 1 MB
 const GOLDEN_RATIO_MAGIC: u64 = 0x9E3779B97F4A7C15;
 
-// ======================= УТИЛИТЫ ДЛЯ БИТОВ =======================
+// ======================= BIT UTILITIES =======================
 
 struct BitWriter {
     buffer: Vec<u8>,
@@ -393,7 +393,7 @@ impl CodecCore {
             let chunk = &buffer[..bytes_read];
             let checksum = adler32(chunk);
             
-            // Идеальный ИИ-Анализатор (Разведка боем): 6 путей в памяти
+            // Perfect AI Analyzer (Trial & Error): 8 paths in RAM
             let delta_chunk = Self::apply_delta(chunk);
             
             let p0 = self.compress_path0(chunk, false);
