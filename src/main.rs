@@ -68,7 +68,7 @@ impl<'a> BitReader<'a> {
     }
 }
 
-// ======================= КРИПТОГРАФИЯ И ЦЕЛОСТНОСТЬ (АВТОРСКАЯ) =======================
+// ======================= CRYPTOGRAPHY & INTEGRITY =======================
 
 fn fractal_mirror_hash(password: &str) -> u64 {
     let mut state: u64 = GOLDEN_RATIO_MAGIC;
@@ -93,7 +93,7 @@ fn adler32(data: &[u8]) -> u32 {
     (b << 16) | a
 }
 
-// ======================= ЯДРО КОДЕКА =======================
+// ======================= CODEC CORE =======================
 
 struct CodecCore {
     fib_table: Vec<u32>,
@@ -168,21 +168,21 @@ impl CodecCore {
         encrypted
     }
 
-    // --- Математика Импульсов и Зеркал (Экспоненциальный код Элиаса-Гамма) ---
+    // --- Pulse and Mirror Math (Elias Gamma Exponential Code) ---
 
     #[inline(always)]
     fn elias_gamma_encode(&self, mut n: u32, writer: &mut BitWriter) {
         n += 1;
-        let k = 31 - n.leading_zeros(); // Количество бит
+        let k = 31 - n.leading_zeros(); // Number of bits
         
-        // 1. Зеркало (масштаб): пишем нули
+        // 1. Mirror (scale): write zeros
         for _ in 0..k {
             writer.write_bit(0);
         }
-        // 2. Вспышка (разделитель)
+        // 2. Flash (separator)
         writer.write_bit(1);
         
-        // 3. Знание (бинарный остаток)
+        // 3. Knowledge (binary remainder)
         for i in (0..k).rev() {
             let bit = ((n >> i) & 1) as u8;
             writer.write_bit(bit);
@@ -274,12 +274,12 @@ impl CodecCore {
             let mut best_match_dist = 0;
             
             let max_len = (chunk.len() - i).min(255);
-            let max_lookback = i.min(65535); // Вектор Б: окно 64 КБ
+            let max_lookback = i.min(65535); // Vector B: 64 KB window
             
             if max_len >= 3 {
                 let h = hash_func(&chunk[i..]);
                 let mut match_pos = head[h];
-                let mut chain_length = 50; // Глубина поиска в цепочке хэшей
+                let mut chain_length = 50; // Search depth in hash chain
                 
                 while match_pos > 0 && i - match_pos <= max_lookback && chain_length > 0 {
                     let dist = i - match_pos;
@@ -290,7 +290,7 @@ impl CodecCore {
                     if current_len > best_match_len {
                         best_match_len = current_len;
                         best_match_dist = dist;
-                        if best_match_len == max_len { break; } // Идеальное совпадение
+                        if best_match_len == max_len { break; } // Perfect match
                     }
                     match_pos = prev[match_pos];
                     chain_length -= 1;
@@ -302,7 +302,7 @@ impl CodecCore {
                 self.fib_encode_number(best_match_dist as u32, &mut writer);
                 self.fib_encode_number(best_match_len as u32, &mut writer);
                 
-                // Вектор Б: Обновляем индекс для всех пропущенных символов
+                // Vector B: Update index for all skipped characters
                 for k in 0..best_match_len {
                     if i + k + 3 <= chunk.len() {
                         let h = hash_func(&chunk[i+k..]);
@@ -339,7 +339,7 @@ impl CodecCore {
         let mut pairs: Vec<_> = pair_counts.into_iter().collect();
         pairs.sort_by(|a, b| b.1.cmp(&a.1)); 
         
-        // Вектор Б: Адаптивный размер словаря (до 255 пар, так как Экспоненциальный код не боится больших чисел)
+        // Vector B: Adaptive dictionary size (up to 255 pairs, as Exponential Code handles large numbers well)
         let mut dict_size = 0;
         for &(_, count) in &pairs {
             if count > 5 && dict_size < 255 {
@@ -364,7 +364,7 @@ impl CodecCore {
                 let pair = (chunk[i], chunk[i+1]);
                 if let Some(&idx) = dict_lookup.get(&pair) {
                     writer.write_bit(1);
-                    // ЭКСПОНЕНЦИАЛЬНЫЙ ЯЗЫК: Зеркало + Знание
+                    // EXPONENTIAL LANGUAGE: Mirror + Knowledge
                     self.elias_gamma_encode(idx, &mut writer);
                     i += 2;
                     continue;
@@ -499,7 +499,7 @@ impl CodecCore {
                     out.push(n as u8);
                 } else { break; }
             } else {
-                // ЭКСПОНЕНЦИАЛЬНЫЙ ЯЗЫК: Читаем Зеркало + Знание
+                // EXPONENTIAL LANGUAGE: Read Mirror + Knowledge
                 if let Some(idx) = self.elias_gamma_decode(reader) {
                     if (idx as usize) < dict_size {
                         let pair = dict[idx as usize];
@@ -528,7 +528,7 @@ impl CodecCore {
             let bytes_read = input_file.read(&mut len_buf)?;
             if bytes_read == 0 { break; }
             if bytes_read != 8 {
-                return Err(io::Error::new(io::ErrorKind::UnexpectedEof, "Поврежденный файл (ошибка фрейминга)"));
+                return Err(io::Error::new(io::ErrorKind::UnexpectedEof, "Corrupted file (framing error)"));
             }
             
             let mut len_arr = [0u8; 4];
@@ -584,7 +584,7 @@ impl CodecCore {
     }
 }
 
-// ======================= ТОЧКА ВХОДА =======================
+// ======================= ENTRY POINT =======================
 
 fn main() {
     let args: Vec<String> = env::args().collect();
