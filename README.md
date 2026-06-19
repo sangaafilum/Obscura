@@ -25,7 +25,15 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 
 ## 🖥️ Desktop App (macOS & Windows)
 
+![Obscura GUI](gui_screenshot.png)
+
 Obscura now features a lightning-fast native Desktop GUI built with `eframe` (egui). It features a cyberpunk dark theme and interacts directly with the core mathematical algorithms, rendering via your GPU.
+
+### GUI Features:
+- **Stealth Password Field:** Secure, hidden input for the Fractal Mirror Hash seed.
+- **Native File Picker:** Integrates directly with macOS/Windows file systems.
+- **Real-Time AI Log:** A built-in scrolling terminal that reports the dispatcher's mathematical paths, Adler-32 integrity checks, and precise compression times.
+- **Instant Execution:** No bloatware. The interface triggers the zero-cost Rust core on a background thread for millisecond latency.
 
 **To run the GUI:**
 ```bash
