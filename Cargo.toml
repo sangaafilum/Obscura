@@ -1,6 +1,11 @@
+[workspace]
+members = [
+    "obscura_gui",
+]
+
 [package]
 name = "obscura"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
