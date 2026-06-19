@@ -23,6 +23,11 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 * **Absolute Integrity:** Built-in Adler-32 checksums ensure the container cannot be decrypted if tampered with or if the wrong password is provided.
 * **Zero Dependencies:** Compiles to a tiny binary. Runs on bare-metal. Perfect for IoT, drones, and highly constrained embedded systems.
 
+## ⬇️ Download
+
+Don't want to compile from source? Download the ready-to-use standalone executable (Zero Dependencies):
+- **[📥 Download for macOS (Apple Silicon)](https://github.com/sangaafilum/Obscura/raw/main/releases/Obscura_macOS.zip)** *(2.2 MB)*
+
 ## 🖥️ Desktop App (macOS & Windows)
 
 ![Obscura GUI](gui_screenshot.jpg)
