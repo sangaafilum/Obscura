@@ -28,7 +28,7 @@ Unlike a ZIP archiver, which analyzes a file to build a frequency dictionary (a 
 
 To achieve C-level speeds while maintaining absolute memory safety, we rewrote the entire core in **Rust**. This gave us the power of *Zero-Cost Abstractions*.
 
-Instead of running a single linear compression algorithm, we designed a **Multi-Pass AI Dispatcher**. For every 1-Megabyte chunk of data, the engine now evaluates up to 8 different compression paths simultaneously in RAM:
+Instead of running a single linear compression algorithm, we designed a **Multi-Pass Heuristic Dispatcher**. For every 1-Megabyte chunk of data, the engine now evaluates up to 8 different compression paths simultaneously in RAM:
 1. Raw Passthrough (to prevent bloat on already-compressed media like MP4s).
 2. Pure Fibonacci Bit-Shift Encoding.
 3. LZ77 Hash Chains + Fibonacci.

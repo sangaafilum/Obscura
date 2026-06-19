@@ -17,7 +17,7 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 ## 🚀 Features
 
 * **Stealth Encryption:** No file headers. No magic bytes. No predictable structure. The output file is mathematically indistinguishable from random noise, making reverse-engineering or signature analysis virtually impossible.
-* **Multi-Pass AI Dispatcher:** The compressor evaluates 8 different compression paths in RAM (including raw passthrough and Delta filtering) to guarantee mathematically optimal lossless compression for any chunk of data.
+* **Multi-Pass Heuristic Dispatcher:** The compressor evaluates 8 different compression paths in RAM (including raw passthrough and Delta filtering) to guarantee mathematically optimal lossless compression for any chunk of data.
 * **Hybrid Entropy Coding:** Uses proprietary combinations of Fibonacci Coding, Elias-Gamma exponential coding, and LZ77-style Hash Chains.
 * **Fractal Mirror Hash (Vector V):** A custom, extremely fast PRNG cipher that uses golden ratio hashing to protect data.
 * **Absolute Integrity:** Built-in Adler-32 checksums ensure the container cannot be decrypted if tampered with or if the wrong password is provided.
@@ -39,7 +39,7 @@ Obscura now features a lightning-fast native Desktop GUI built with `eframe` (eg
 ### GUI Features:
 - **Stealth Password Field:** Secure, hidden input for the Fractal Mirror Hash seed.
 - **Native File Picker:** Integrates directly with macOS/Windows file systems.
-- **Real-Time AI Log:** A built-in scrolling terminal that reports the dispatcher's mathematical paths, Adler-32 integrity checks, and precise compression times.
+- **Real-Time Log:** A built-in scrolling terminal that reports the dispatcher's mathematical paths, Adler-32 integrity checks, and precise compression times.
 - **Instant Execution:** No bloatware. The interface triggers the zero-cost Rust core on a background thread for millisecond latency.
 
 **To run the GUI:**
