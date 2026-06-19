@@ -3,7 +3,6 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Language](https://img.shields.io/badge/Language-Rust_100%25-orange.svg)
 ![Status](https://img.shields.io/badge/Status-Research_Prototype-blue.svg)
-![Build](https://github.com/sangaafilum/Obscura/actions/workflows/rust.yml/badge.svg)
 
 Obscura is a micro-footprint, zero-dependency stealth cryptographic container and lossless compressor built entirely in Rust using pure mathematical algorithms. 
 
@@ -24,9 +23,21 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 * **Absolute Integrity:** Built-in Adler-32 checksums ensure the container cannot be decrypted if tampered with or if the wrong password is provided.
 * **Zero Dependencies:** Compiles to a tiny binary. Runs on bare-metal. Perfect for IoT, drones, and highly constrained embedded systems.
 
-## 🛠 Usage
+## 🖥️ Desktop App (macOS & Windows)
 
-Obscura is designed as a fast CLI tool.
+Obscura now features a lightning-fast native Desktop GUI built with `eframe` (egui). It features a cyberpunk dark theme and interacts directly with the core mathematical algorithms, rendering via your GPU.
+
+**To run the GUI:**
+```bash
+cd obscura_gui
+cargo run --release
+```
+
+*(Note: Always use `--release` for the GUI, as unoptimized debug builds of the heavy cryptography will cause the interface to freeze on large files).*
+
+## 🛠 CLI Usage
+
+Obscura is also designed as a fast CLI tool for servers and embedded systems.
 
 **Compress & Encrypt:**
 ```bash
