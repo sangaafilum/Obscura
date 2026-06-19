@@ -27,8 +27,8 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 
 Don't want to compile from source? Download the ready-to-use standalone executable (Zero Dependencies):
 - **[📥 Download for macOS (Apple Silicon)](https://github.com/sangaafilum/Obscura/raw/main/releases/Obscura_macOS.zip)**
-- **[📥 Download for Windows (.exe)](https://github.com/sangaafilum/Obscura/raw/main/releases/Obscura_Windows.zip)**
-- **[📥 Download for Linux](https://github.com/sangaafilum/Obscura/raw/main/releases/Obscura_Linux.zip)**
+
+*(Windows and Linux standalone binaries are currently compiling in the CI pipeline and will be available shortly).*
 
 ## 🖥️ Desktop App (macOS & Windows)
 
