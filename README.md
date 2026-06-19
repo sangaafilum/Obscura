@@ -25,7 +25,7 @@ In the world of cryptography and embedded systems, memory safety is paramount. O
 
 ## 🖥️ Desktop App (macOS & Windows)
 
-![Obscura GUI](gui_screenshot.png)
+![Obscura GUI](gui_screenshot.jpg)
 
 Obscura now features a lightning-fast native Desktop GUI built with `eframe` (egui). It features a cyberpunk dark theme and interacts directly with the core mathematical algorithms, rendering via your GPU.
 
