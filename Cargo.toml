@@ -1,0 +1,20 @@
+[workspace]
+members = [
+    "obscura_v1",
+    "obscura_v2",
+    "obscura_v3",
+    "obscura_v5",
+    "obscura_v6",
+    "obscura_hybrid"
+]
+
+[package]
+name = "obscura"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+bytemuck = { version = "1.25.2", features = ["derive"] }
+pollster = "1.0.1"
+wgpu = "0.20.0"
