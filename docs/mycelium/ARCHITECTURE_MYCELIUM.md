@@ -1,107 +1,105 @@
-# Проект Mycelium: Архитектура, Стенограмма Исследований и Дорожная Карта
+# Project Mycelium: Architecture, Research Chronicle & Roadmap
 
-> **Статус проекта:** Закрытая концептуальная разработка (Proprietary / Closed Research).  
-> **Формат документа:** Концептуальный манифест, хроника прототипирования и детальная архитектурная спецификация (без раскрытия низкоуровневого кода ядра).
-
----
-
-## 1. Фундаментальная Философия и Концепция
-
-Современная индустрия искусственного интеллекта зашла в тупик матричных вычислений. Классические Transformer-архитектуры и LLM работают как ресурсоемкие «калькуляторы вероятностей»:
-* Огромные матрицы вещественных чисел (Float16/Float32);
-* Миллиарды перемножений и обращений к памяти ради одного токена;
-* Непрерывная трата вычислительной энергии на вычисление «нулей» и пустоты;
-* Отсутствие биологической достоверности, локального обучения и структурного понимания смыслов.
-
-### Архитектурный постулат Mycelium:
-> **«Избавиться от нулей и использовать только единицы (события). Заменить непрерывную матричную кашу топологией биологического мицелия и спайковой физикой.»**
-
-В **Mycelium** информация не вычисляется бесконечными перемножениями весов — она **протекает** в виде электрических импульсов (спайков) по графу синапсов. Память и процессинг объединены в одной точке:
-1. **Дискретность событий:** Время и энергия тратятся только тогда, когда происходит спайк (1). Пустота (0) не требует машинных ресурсов.
-2. **Форма рождает формулу:** Семантика естественного языка задается геометрией графа, а не вектором в пространстве эмбеддингов.
-3. **Нативный движок:** Архитектура создается с прицелом на кастомную спайковую виртуальную машину (`spikeasm_vm`) на базе DSL `Beszercess` с поддержкой био-пластичности (STDP/LTD) и параллельного вычисления на Apple Metal GPU.
+> **Project Status:** Closed Conceptual R&D (Proprietary / Closed Research).  
+> **Document Purpose:** Architectural manifesto, prototyping chronicle, and high-level technical specifications (omitting proprietary engine source code).
 
 ---
 
-## 2. Стенограмма Этапов Разработки (Отчет о Проделанной Работе)
+## 1. Foundational Philosophy and Core Concept
 
-Ниже зафиксирована хронология исследований, гипотез, экспериментов и полученных результатов:
+The modern artificial intelligence industry has arrived at a compute bottleneck driven by dense matrix algebra. Conventional Transformer architectures and Large Language Models function as power-hungry probability calculators:
+* Vast matrices of floating-point numbers (Float16/Float32);
+* Billions of floating-point multiplications and memory reads per generated token;
+* Continuous dissipation of computing cycles calculating inactive parameters and "zeros";
+* Lack of biological fidelity, localized learning, and structural semantic representation.
 
-### Этап 1: Семантическое Ядро (Semantic Core)
-* **Идея:** Проверить, может ли простая сеть узлов с пороговым возбуждением связывать разрозненные слова в единую концепцию.
-* **Эксперимент:** Спроектирована топология, в которой слова сходятся к абстрактным концептам.
-* **Результат:** Доказано, что одновременное возбуждение нескольких базовых слов суммирует потенциал на целевом узле смысла и вызывает его спайк без математических матриц.
+### Architectural Postulate of Mycelium:
+> **"Eliminate all computational zeroes and process active events ('ones') exclusively. Replace dense matrix arithmetic with the topology of biological mycelium and spiking dynamics."**
 
-### Этап 2: Проблема комбинаторного взрыва и Префиксное Дерево (Neural Trie)
-* **Проблема:** Если связать 50 000 слов напрямую с базовыми буквами, очередь событий виртуальной машины мгновенно переполнится (`EventQueue overflow`).
-* **Решение:** Построена иерархическая структура префиксного дерева (Trie) на спайках: `C` $\to$ `CA` $\to$ `CAT`. 
-* **Результат:** Нагрузка на планировщик событий снижена на порядки. Распознавание слова происходит пошагово по мере поступления символов через промежуточные синаптические узлы-слоги.
-
-### Этап 3: Отказ от временного кодирования (Морзе) в пользу Пространственных Аккордов
-* **Критическая ошибка первоначального плана:** Первая попытка кодировать буквы через временные задержки (как в азбуке Морзе: точка/тире) вернула в систему «нули» (ожидание тактов задержки) и затормозила распознавание.
-* **Архитектурный прорыв:** Переход на **Пространственные Аккорды (Spatial Chords)**. 
-* **Реализация:** Спроектирована 8-битная параллельная шина рецепторов (`BUS_0` .. `BUS_7`). Каждая буква кодируется одновременным ударом строго 3 уникальных рецепторов на такте $t=0$ с задержкой `delay = 0`.
-* **Результат:** Мгновенное распознавание букв без ожидания времени. Использованы только «единицы».
-
-### Этап 4: Генерация Семантической Формы из Толкового Словаря (Webster)
-* **Идея:** Словарю нужна форма, а форма создаст биологическую формулу понимания.
-* **Реализация:** Разработан конвейер парсинга толкового словаря английского языка (86 000+ словарных статей). Словарь очищен от синтаксического шума, а каждое определение деконструировано на ключевые концепты.
-* **Результат:** 
-  * Сгенерирован граф смыслов из **16 165 уникальных узлов концептов**.
-  * Каждое слово через синапсы запитало свои семантические свойства (например: `WORD_ABACUS` активирует `CONCEPT_CALCULATING`, `CONCEPT_TABLE`, `CONCEPT_FRAME`).
-  * Получена сеть обратного поиска: подача спайков в концепты находит ассоциированные слова топологически.
-
-### Этап 5: Биологическая Грамматика (Central Pattern Generator / CPG)
-* **Идея:** Мозгу нужен «формуляр» для построения связной речи во времени, иначе слова вывалятся хаотичной массой.
-* **Реализация:** Спроектирован биологический контур CPG — внутренние ритмические часы с жесткими задержками активации грамматических слотов:
-  * $t=0$: Слот Субъекта (`SLOT_SUBJECT`)
-  * $t=10$: Слот Глагола (`SLOT_VERB`)
-  * $t=20$: Слот Объекта (`SLOT_OBJECT`)
-* **Результат:** Слова выдаются последовательно, только если на них одновременно сошлись две энергии: заряд от смысла (семантика) и заряд от грамматического слота (синтаксис).
+In **Mycelium**, knowledge is not computed via dense weight multiplication — it **flows** as electrical action potentials (spikes) across synaptic topologies. Memory and compute converge:
+1. **Event-Driven Computation:** Energy and compute are consumed strictly when an action potential occurs (1). Inactive state (0) incurs zero operational overhead.
+2. **Topology Dictates Formula:** Natural language semantics are defined by graph geometry rather than continuous embedding vectors.
+3. **Native Engine Integration:** Designed to run directly on the custom `spikeasm_vm` spiking virtual machine leveraging the `Beszercess` DSL, incorporating Spike-Timing-Dependent Plasticity (STDP/LTD) and Apple Metal GPU parallelism.
 
 ---
 
-## 3. Текущее Состояние и Архитектурный Рубеж
+## 2. Research Chronicle (Stage-by-Stage Progression)
 
-В точке фиксации обнаружены две критические архитектурные задачи:
+A chronological account of hypotheses, experiments, and verified milestones:
 
-1. **Проблема «Эпилепсии Сети» (Отсутствие Торможения):**
-   * *Симптом:* При активации грамматического слота (например, `SLOT_SUBJECT`) все активные синонимы или связанные существительные в графе могут превысить порог одновременно. Сеть выдает словесную кашу вместо одного слова.
-   * *Решение:* Внедрение механизма **Бокового Торможения (Lateral Inhibition / Winner-Takes-All)** через отрицательные веса (LTD). Первый победивший узел мгновенно блокирует соседей.
+### Stage 1: Semantic Core Convergence
+* **Concept:** Determine whether threshold-driven node networks can bind disparate lexical tokens into unified semantic constructs.
+* **Experiment:** Designed a topology where lexical nodes converge onto abstract concept nodes.
+* **Result:** Confirmed that concurrent activation across multiple words integrates membrane potential onto target conceptual nodes, triggering action potentials without matrix dot-products.
 
-2. **Мультиязычность через Семантический Интерлингва-Протокол:**
-   * Протокол концептов (`CONCEPT_*`) инвариантен к языкам.
-   * Английское `WORD_APPLE` и русское `WORD_ЯБЛОКО` подсоединены к одним и тем же узлам (`CONCEPT_FRUIT`, `CONCEPT_RED`).
-   * Перевод реализуется не внешней моделью, а векторным переключением возбуждения/подавления языковых лексиконов при сохранении смыслового паттерна.
+### Stage 2: Combinatorial Explosion & Neural Prefix Trees (Trie)
+* **Challenge:** Directly connecting 50,000+ words to fundamental character receptors saturates the virtual machine's event queue (`EventQueue overflow`).
+* **Resolution:** Engineered a hierarchical Spiking Prefix Tree (Trie): `C` $\to$ `CA` $\to$ `CAT`.
+* **Result:** Event scheduler pressure dropped by orders of magnitude. Word recognition occurs progressively through intermediate syllable nodes as symbols arrive.
+
+### Stage 3: Spatial Chords over Temporal Delays (Morse Deprecation)
+* **Design Flaw in Initial Prototype:** Serial temporal delays (dot/dash intervals) re-introduced computational wait times ("zeros") and throttled throughput.
+* **Breakthrough:** Transitioned to **Spatial Chords**.
+* **Implementation:** An 8-bit parallel receptor bus (`BUS_0` .. `BUS_7`). Each character maps to a unique 3-receptor chord firing synchronously at $t=0$ with `delay = 0`.
+* **Result:** Instantaneous character classification with zero pipeline latency, operating strictly on active spikes.
+
+### Stage 4: Semantic Form Extraction via Lexical Corpus (Webster)
+* **Concept:** Language structure requires a structural template, which in turn defines an operational formula.
+* **Implementation:** Parsed an 86,000+ entry English dictionary. Stripped syntactic noise and extracted core semantic definitions.
+* **Result:**
+  * Synthesized a knowledge graph comprising **16,165 unique concept nodes**.
+  * Each word activates its conceptual attributes through synaptic pathways (e.g., `WORD_ABACUS` drives `CONCEPT_CALCULATING`, `CONCEPT_TABLE`, `CONCEPT_FRAME`).
+  * Enables associative reverse-lookup: injecting spikes into conceptual nodes topological activates associated vocabulary.
+
+### Stage 5: Biological Grammar (Central Pattern Generator / CPG)
+* **Concept:** Syntactic coherence requires temporal coordination, preventing unordered activation bursts.
+* **Implementation:** Engineered an autonomous biological CPG oscillator with calibrated delay intervals:
+  * $t=0$: Subject Slot (`SLOT_SUBJECT`)
+  * $t=10$: Verb Slot (`SLOT_VERB`)
+  * $t=20$: Object Slot (`SLOT_OBJECT`)
+* **Result:** Words fire sequentially only when receiving concurrent stimulation from both semantic activation and the grammatical gating signal.
 
 ---
 
-## 4. Комплексный План Дальнейших Действий
+## 3. Current Frontier & Identified Challenges
+
+1. **Network Hyper-Activation (Absence of Lateral Inhibition):**
+   * *Symptom:* Triggering a grammatical slot (e.g., `SLOT_SUBJECT`) can cause all semantically primed synonyms or related nouns to exceed firing thresholds simultaneously, producing an unstructured word cascade.
+   * *Resolution:* Implementation of **Lateral Inhibition / Winner-Takes-All (WTA)** dynamics using negative synaptic weights (LTD). The first winning node instantaneously suppresses neighboring competitors.
+
+2. **Cross-Lingual Semantic Interlingua:**
+   * Conceptual nodes (`CONCEPT_*`) are language-agnostic.
+   * English `WORD_APPLE` and Russian `WORD_ЯБЛОКО` terminate on the identical semantic nodes (`CONCEPT_FRUIT`, `CONCEPT_RED`).
+   * Translation is accomplished by selective gating of linguistic sub-networks without altering the underlying conceptual pattern.
+
+---
+
+## 4. Comprehensive Engineering Roadmap
 
 ```mermaid
 flowchart TD
-    A["Слой 1: Входная шина (Spatial Chords)"] --> B["Слой 2: Распознаватель слов (Neural Trie)"]
-    B --> C["Слой 3: Семантический Мицелий (Граф Смыслов)"]
-    C <--> D["Слой 4: Мультиязычная Интерлингва (RU/EN/...)"]
-    C --> E["Слой 5: Биологическая Грамматика (CPG)"]
-    E --> F["Слой 6: Модуль Торможения (Winner-Takes-All)"]
-    F --> G["Синтез Ответа (Выходные спайки)"]
+    A["Tier 1: Input Receptor Bus (Spatial Chords)"] --> B["Tier 2: Lexical Trie Recognition"]
+    B --> C["Tier 3: Semantic Mycelium (Concept Graph)"]
+    C <--> D["Tier 4: Multilingual Interlingua (RU/EN/...)"]
+    C --> E["Tier 5: Biological Grammar Engine (CPG)"]
+    E --> F["Tier 6: Lateral Inhibition (Winner-Takes-All)"]
+    F --> G["Output Action Potentials"]
 ```
 
-### Фаза 1: Стабилизация Динамики (Борьба с Эпилепсией)
-* [ ] Спроектировать тормозящие контуры (LTD / отрицательные веса) для узлов одного грамматического и семантического класса.
-* [ ] Ввести локальные интернейроны-супрессоры: как только узел слова преодолевает порог $V_{th}$, он генерирует тормозной спайк по кластеру конкурентов.
+### Phase 1: Dynamic Stabilization (Inhibition Engine)
+* [ ] Implement lateral inhibition circuits (negative weights) across competing lexical nodes within identical grammatical categories.
+* [ ] Integrate inhibitory interneurons to suppress rival nodes once threshold $V_{th}$ is reached.
 
-### Фаза 2: Мультиязычное Расширение (RU + EN)
-* [ ] Подключить русскоязычный толковый тезаурус.
-* [ ] Связать русские слова с существующей базой концептов `CONCEPT_*`.
-* [ ] Реализовать «переключатель контекста языка» через управляющий спайковый пул.
+### Phase 2: Multilingual Expansion (RU + EN)
+* [ ] Ingest Russian explanatory lexical databases.
+* [ ] Bind Russian vocabulary to the invariant `CONCEPT_*` topology.
+* [ ] Implement language context gating via regulatory spike pools.
 
-### Фаза 3: Интеграция с Движком `spikeasm_vm`
-* [ ] Скомпилировать тестовый блок графа Mycelium в нативный байткод VM.
-* [ ] Провести валидацию на аппаратном стенде (Apple Metal GPU / CPU).
-* [ ] Замерить задержки отклика, потребление памяти и стабильность очереди событий.
+### Phase 3: Hardware Verification on `spikeasm_vm`
+* [ ] Compile Mycelium graph modules into native VM bytecode.
+* [ ] Benchmark on physical hardware (Apple Silicon / Metal GPU).
+* [ ] Measure response latency, memory profiles, and event queue stability.
 
-### Фаза 4: Диалоговый Протокол
-* [ ] Создать петлю обратной связи (рекуррентные синапсы кратковременной памяти контекста).
-* [ ] Реализовать интерфейс подачи пользовательских вопросов и считывания выходных паттернов.
+### Phase 4: Conversational Protocol
+* [ ] Design recurrent synaptic feedback loops for short-term contextual memory.
+* [ ] Establish an interactive interrogation interface.

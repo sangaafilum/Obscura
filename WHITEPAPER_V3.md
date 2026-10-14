@@ -1,62 +1,64 @@
-# Obscura Codec: Эволюция и Архитектура (Whitepaper)
+# Obscura Codec: Evolution and Architecture (Whitepaper)
 
-Данный документ представляет собой публичный технический обзор эволюции криптографического контейнера **Obscura**, от базовых версий до новейшей био-имитационной архитектуры V3. 
-*(Примечание: Точные математические формулы и исходный код V3 засекречены и являются закрытой интеллектуальной собственностью).*
+This document provides a technical overview of the evolution of the **Obscura** cryptographic suite, spanning from baseline implementations to the cutting-edge biomimetic V3 architecture.  
+*(Notice: Proprietary mathematical formulations, low-level execution primitives, and V3 core binaries are protected intellectual property and are not disclosed).*
 
 ---
 
-## 1. История Версий и Сравнительный Анализ
+## 1. Version History and Comparative Analysis
 
-Проект прошел три фундаментальные стадии развития, каждая из которых радикально меняла подход к работе с памятью и шифрованию.
+The project underwent three fundamental architectural transitions, each completely transforming memory management, cryptographic throughput, and hardware utilization.
 
-| Функция / Метрика | V1: Базовая | V2: Quantum-Neuro | V3: Gorgon Engine (Current) |
+| Feature / Metric | V1: Baseline | V2: Quantum-Neuro | V3: Gorgon Engine (Current) |
 | :--- | :--- | :--- | :--- |
-| **Управление Памятью** | Чтение файла целиком (RAM = File Size) | Блочное чтение (VFS, чанки по 32 МБ) | **Потоковое (Zero-Copy)**. Динамическое потребление менее 15 МБ (теоретическая масштабируемость до Терабайт). |
-| **Параллелизм** | Однопоточный | Однопоточный CPU + GPU-ускорение (Metal) | **Массовый Параллелизм CPU** (Виртуальные потоки) + Подготовка к асинхронному GPU |
-| **Криптография** | XOR со сдвигом | Спайковая нейросеть (NeuroRatchet) | **Параллельный NeuroRatchet** с уникальными векторами |
-| **Генерация Ключа** | Стандартный HASH | QuantumSpin5D (Хаос и Топология) | Унаследовано от V2 |
-| **Скорость (CPU)** | ~15-20 МБ/с | ~40-50 МБ/с | **~320 МБ/с** (Масштабируется от количества ядер) |
+| **Memory Management** | Full file buffered (RAM = File Size) | Chunked buffering (VFS, 32 MB chunks) | **Zero-Copy Streaming**. Dynamic footprint < 15 MB (infinite theoretical scalability). |
+| **Concurrency** | Single-threaded | Single-thread CPU + GPU acceleration (Metal) | **Massive CPU Concurrency** (Virtual threading) + Async GPU pipeline |
+| **Cryptography** | Shifted XOR | Spiking Neural Network (NeuroRatchet) | **Parallelized NeuroRatchet** with isolated thread states |
+| **Key Synthesis** | Standard HASH | QuantumSpin5D (Chaos & Topology) | Inherited from V2 |
+| **Throughput (CPU)** | ~15-20 MB/s | ~40-50 MB/s | **~320 MB/s** (Linearly scales with core count) |
 
 ---
 
-## 2. Обзор Технологий и Прототипов
+## 2. Core Technologies and Architectural Prototypes
 
-В основе V3 лежат инновационные прототипы, вдохновленные биологическими и природными процессами. Ниже приведено концептуальное описание механизмов.
+At the heart of V3 are specialized engines engineered around natural and biological mechanics.
 
-### Прототип: "Ouroboros" (Уроборос)
-**Суть:** Решение проблемы чрезмерного потребления оперативной памяти.
-**Как работает:** Вместо того чтобы загружать тяжелые файлы в память (что приводило к сбоям на слабых устройствах), алгоритм создает закольцованный микро-буфер. Данные читаются потоком, мутируют прямо внутри буфера и мгновенно выписываются на диск. 
-**Результат:** "Уроборос" позволяет зашифровать файл практически любого объема (теоретический предел не ограничен), используя всего пару мегабайт оперативной памяти. 
+### Prototype: "Ouroboros"
+**Purpose:** Eradication of excessive RAM consumption during large payload encryption.  
+**Mechanism:** Instead of loading full file trees into volatile memory, Ouroboros operates a cyclic micro-buffer. Byte streams mutate inside this circular ring and flush straight to disk storage without memory spikes.  
+**Result:** Facilitates multi-gigabyte or terabyte container encryption with a negligible, fixed memory profile of just a few megabytes.
 
-### Прототип: "Gorgon" (Горгона)
-**Суть:** Массовый параллелизм без потери криптографической стойкости.
-**Как работает:** Развитие идеи Уробороса. Вместо одной "змеи", обрабатывающей файл, движок запускает тысячи независимых микро-процессов (виртуальных потоков). Каждый поток берет крошечный фрагмент файла и шифрует его на свободном ядре процессора.
-**Результат:** Линейное масштабирование скорости. Программа утилизирует 100% вычислительной мощности устройства.
+### Prototype: "Gorgon"
+**Purpose:** Massively parallel throughput without cryptographic vulnerability.  
+**Mechanism:** Escalation of the Ouroboros primitive. Rather than a single processing pipeline, Gorgon spawns thousands of micro-tasks across virtual workers. Each worker ingests a micro-chunk, driving parallel core utilization to 100%.  
+**Result:** Linear hardware performance scaling across multi-core processors.
 
-### Прототип: "Командир Горгоны" (Gorgon Commander)
-**Суть:** Синхронизация асинхронного хаоса.
-**Как работает:** Когда тысячи потоков работают одновременно, они заканчивают работу в разное время (происходит рассинхронизация). "Командир" — это жесткий оркестратор. Он маркирует каждый входящий фрагмент уникальным порядковым ID. После завершения шифрования, Командир собирает фрагменты, восстанавливает их хронологический порядок и бесшовно записывает на диск.
-**Результат:** Идеальное восстановление данных (Lossless). Ни один байт не теряется и не меняет своего места.
+### Prototype: "Gorgon Commander"
+**Purpose:** Synchronization of asynchronous parallel streams.  
+**Mechanism:** Coordinates out-of-order completions from distributed threads. Every incoming block receives a monotonic sequence ID. Upon completion, the Commander orders and stitches the blocks back into a bit-exact stream.  
+**Result:** Lossless, zero-error reconstruction (Diff = 0).
 
-### Унаследованные механизмы (V2)
-*   **NeuroRatchet:** Вместо статических математических формул шифрования используется симуляция спайковой нейронной сети. Поступающие байты выступают в роли "раздражителей", меняя веса синапсов на ходу.
-*   **QuantumSpin5D:** Модуль генерации ключа, использующий нелинейные вращения (затрагивающие фактор времени и топологию ленты Мебиуса) для защиты от брутфорс-атак.
+### Inherited Primitives (V2)
+* **NeuroRatchet:** Replaces static S-boxes and standard mathematical rounds with an evolving 4-node Spiking Neural Network. Incoming plaintext bytes act as external action potentials, triggering Spike-Timing-Dependent Plasticity (STDP) that continuously mutates synaptic weights.
+* **QuantumSpin5D:** Key derivation utilizing high-dimensional non-linear state rotations, incorporating time manifolds and Möbius strip topologies to neutralize brute-force cryptanalysis.
 
 ---
 
-## 3. Результаты Нагрузочного Тестирования V3
+## 3. High-Load Benchmark Metrics (V3)
 
-**Стенд тестирования:**
-Тестирование прототипа проводилось на рабочей станции 9-летней давности — **iMac 27" (2017), Intel Core i5 3.8 GHz, 24GB RAM, Radeon Pro 580**. 
-Все вычисления производились **исключительно на ресурсах центрального процессора (CPU)** без привлечения дискретной видеокарты. То, что архитектура выдает такие скорости на старом железе, доказывает высочайшую эффективность виртуальных потоков Горгоны.
+**Test Bench:**  
+Evaluated on legacy workstation hardware — **iMac 27" (2017), Intel Core i5 3.8 GHz, 24GB RAM, Radeon Pro 580**.  
+All benchmarks executed **exclusively on Central Processing Unit (CPU) cores** without GPU offloading, demonstrating the extreme computational efficiency of the Gorgon architecture.
 
-*   **Тестовый файл:** "Война и Мир" (Текст, 3.20 МБ)
-    *   *Время шифрования:* 0.01 сек
-    *   *Время дешифровки:* 0.006 сек
-    *   *Итог:* Полностью безошибочное восстановление (Diff = 0). Скорость: **~320 МБ/с**.
-*   **Тестовый файл:** Синтетический бинарный массив (100 МБ)
-    *   *Время полного цикла:* 0.77 сек
-    *   *Потребление ОЗУ:* Зафиксировано на ~13 МБ.
+* **Sample Payload:** Tolstoy's "War and Peace" (Text, 3.20 MB)
+  * *Encryption latency:* 0.01 sec
+  * *Decryption latency:* 0.006 sec
+  * *Integrity:* Bit-identical recovery (Diff = 0). Effective speed: **~320 MB/s**.
+* **Sample Payload:** Synthetic binary array (100 MB)
+  * *Full roundtrip latency:* 0.77 sec
+  * *Resident Memory (RAM):* Monitored at ~13 MB.
 
-## 4. Вектор дальнейшего развития
-Следующим этапом планируется интеграция **Спектрального Диспетчера**, который будет распределять работу не только между ядрами CPU, но и асинхронно загружать GPU (Apple Metal) для тяжелых вычислительных блоков, а также внедрение проприетарного **Кластерного Языка** для пре-сжатия данных.
+---
+
+## 4. Forward Engineering Vector
+Upcoming iterations target the **Spectral Dispatcher**, orchestrating asynchronous task distribution between CPU threads and Apple Metal GPU compute pipelines, along with a proprietary **Cluster Language** for adaptive pre-compression.

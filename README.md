@@ -1,33 +1,33 @@
 # Obscura Stealth Codec
 
-Obscura — это экспериментальный криптографический контейнер, который выходит за рамки классической информатики. Проект исследует радикальные концепции: генеративное сжатие, криптографию на базе нейросетей с нулевой сигнатурой и биологические виртуальные машины.
+Obscura is an experimental cryptographic container engineered beyond classical computer science dogmas. The project investigates radical primitives: generative compression, zero-signature spiking neural network stream ciphers, and biologically plausible virtual machines.
 
-## 🗄️ Архив Версий
+## 🗄️ Version Archive
 
 ### 📦 [ARCHIVE] Obscura v1.0: Pulse Computing
-Оригинальный концепт. Отказ от стандартных парадигм индустрии (таких как деревья Хаффмана и AES). Использование чистых математических последовательностей (Фибоначчи) и создание базового `Fractal Mirror Hash`.
-* **Статус:** В архиве. Доступно в истории коммитов.
+The foundational prototype. Complete abandonment of conventional industry tropes (such as Huffman trees and standard AES). Leveraging mathematical integer progressions (Fibonacci sequences) alongside the initial `Fractal Mirror Hash`.
+* **Status:** Archived. Accessible in commit history.
 
 ### 📦 [ARCHIVE] Obscura v2.0: Quantum-Neuro Edition
-Гигантский архитектурный скачок. 
-Статические хэши были заменены на **5D Квантовый Спин (Формулу Хаоса)**, который моделирует время и топологию Мёбиуса. Был внедрен `NeuroRatchet` — потоковый шифр на базе спайковой нейросети (SNN), мутирующий ключ от каждого байта. Добавлено гибридное аппаратное ускорение **Apple Metal GPU (WGSL)** для параллельного сканирования паттернов.
-* **Статус:** В архиве (Stable).
-* 📄 **[Читать полный архитектурный вердикт и документацию v2.0](docs/ARCHITECTURE_V2.md)**
+A massive architectural leap. 
+Static hashes were superseded by the **5D Quantum Spin (Chaos Formulation)**, modeling time vectors and Möbius strip topology. Introduced `NeuroRatchet` — a streaming cipher driven by a Spiking Neural Network (SNN) that continuously mutates keys on every incoming byte via synaptic plasticity. Integrated hybrid hardware acceleration via **Apple Metal GPU (WGSL)** for high-throughput pattern scanning.
+* **Status:** Archived (Stable).
+* 📄 **[Read complete architectural verdict and v2.0 documentation](docs/ARCHITECTURE_V2.md)**
 
 ---
 
-## 🧬 Текущая Разработка (Экспериментальная ветка)
+## 🧬 Active Development (Experimental Branch)
 
 ### 🔬 Obscura v3.0: Bio-Membrane & Fractal Steganography
-*Ветка активной разработки (`v3_bio_membrane`).*
-Отказ от классического бинарного кода в пользу **Четверичного Инструкционного Набора (ДНК-Код: A-C-G-T)**. Данные больше не просто сжимаются — они "выращиваются" через фрактальные формулы. 
-Внедрение **Генеративной Стеганографии**: зашифрованные архивы выводятся в виде безобидных `.png` картинок с фракталами, полностью скрывая факт наличия зашифрованных данных от любых систем цензуры или анализа (Zero-Signature / Security through Artistic Obscurity).
+*Active development branch (`v3_bio_membrane`).*
+Transcendence of binary instruction paradigms in favor of a **Quaternary Instruction Set Architecture (DNA Code: A-C-G-T)**. Data is no longer merely compressed — it is biologically synthesized and expanded through fractal equations. 
+Implementation of **Generative Steganography**: encrypted archives materialize as innocuous fractal `.png` artifacts, entirely obfuscating the presence of encrypted payloads from deep packet inspection or automated forensic scanners (Zero-Signature / Security through Artistic Obscurity).
 
 ---
 
-## 🍄 R&D: Проект Mycelium (Bio-Spike Semantic Intelligence)
-*Специальное исследовательское направление в рамках био-виртуальных машин.*
-Исследование архитектуры спайкового искусственного интеллекта на базе языка `Beszercess` и движка `spikeasm_vm`. Полный отказ от матриц весов (LLM/Transformers) в пользу пространственных аккордов, префиксных деревьев, семантических графов смыслов и биологической грамматики.
-* **Статус:** R&D / Закрытая концептуальная разработка (Proprietary). Исходный код ядра закрыт.
-* 📄 **[Читать архитектурный манифест и хронику исследований Mycelium](docs/mycelium/ARCHITECTURE_MYCELIUM.md)**
-
+## 🍄 R&D: Project Mycelium (Bio-Spike Semantic Intelligence)
+*Dedicated biological computing research branch.*
+Exploration of a neuromorphic spiking AI core built upon the `Beszercess` DSL and `spikeasm_vm` runtime. Radical elimination of dense floating-point weight matrices (Transformers/LLMs) in favor of spatial chords, hierarchical prefix tries, associative semantic graphs, and biological rhythm generators.
+* **Status:** R&D / Proprietary Closed Research. Core engine implementations remain confidential.
+* 📄 **[Read the Mycelium Architecture Manifesto & Research Log](docs/mycelium/ARCHITECTURE_MYCELIUM.md)**
+* 🌐 **[Official Standalone Repository: Mycelium-AI](https://github.com/sangaafilum/Mycelium-AI)**
