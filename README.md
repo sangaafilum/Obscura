@@ -2,6 +2,8 @@
 
 Obscura is an experimental cryptographic container engineered beyond classical computer science dogmas. The project investigates radical primitives: generative compression, zero-signature spiking neural network stream ciphers, and biologically plausible virtual machines.
 
+> 🇷🇺 **[Русская версия документации (README_RU.md)](README_RU.md)**
+
 ## 🗄️ Version Archive
 
 ### 📦 [ARCHIVE] Obscura v1.0: Pulse Computing
